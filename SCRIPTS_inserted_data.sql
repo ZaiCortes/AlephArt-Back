@@ -198,9 +198,48 @@ CREATE TABLE IF NOT EXISTS `AlephArt`.`events` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-select * from book;
-select * from user;
+
+-- ------------------------------------------------------ --
+-- ---------------- INSERCIÓN  DE  DATOS ---------------- --
+-- ------------------------------------------------------ --
+
+SELECT * FROM book;
+SELECT * FROM userprofile;
+SELECT * FROM user;
+SELECT * FROM posts;
+SELECT * FROM comments;
+SELECT * FROM eventmode;
+SELECT * FROM eventcategory;
+SELECT * FROM locationcity;
+SELECT * FROM locationstate;
+SELECT * FROM events;
+
+
+
+INSERT INTO `AlephArt`.`book` 
+(`book_photo`, `book_name`, `book_description`) 
+VALUES
+(NULL, 'Atardeceres Dorados', 'This is a description of the example book.');
+SELECT * FROM book;
+INSERT INTO `AlephArt`.`book` 
+(`book_photo`, `book_name`, `book_description`) 
+VALUES
+(NULL, '2 example book', 'This is a description of the 2 example book.'),
+(NULL, '3 example book', 'This is a description of the 3 example book.'),
+(NULL, '4 example book', 'This is a description of the 4 example book.'),
+(NULL, '5 example book', 'This is a description of the 5 example book.');
+
+
+INSERT INTO `AlephArt`.`userprofile` 
+(`profile_photo`, `banner`, `about_me`, `profession`, `book_id_book`) 
+VALUES
+(NULL, NULL, 'Hello, I am a user of AlephArt!', 'Artist', 1),  -- Asume que `book_id_book = 1` existe en `book`
+(NULL, NULL, 'Hello, I am a user of AlephArt!', 'Music', 2), 
+(NULL, NULL, 'Hello, I am a user of AlephArt!', 'Pintor', 3), 
+(NULL, NULL, 'Hello, I am a user of AlephArt!', 'Visual Artist', 4),
+(NULL, NULL, 'Hello, I am a user of AlephArt!', 'Actor', 5);
 select * from userprofile;
+
 
 INSERT INTO `AlephArt`.`user` 
 (`username`, `last_name`, `phone_number`, `password`, `email`, `userprofile_id_user_profile`) 
@@ -216,7 +255,8 @@ select * from userprofile;
 INSERT INTO `AlephArt`.`posts` 
 (`posts_date`, `posts_description`, `post_file`, `user_id_user`, `user_userprofile_id_user_profile`) 
 VALUES
-(CURDATE(), 'Comparti mi más reciente obra de arte', NULL, 1, 1),  -- Asume que `user_id_user = 1` y `user_userprofile_id_user_profile = 1` existen en la tabla `user`
+(CURDATE(), 'Comparti mi más reciente obra de arte', NULL, 1, 1),  -- Asume que `user_id_user = 1` 
+																   -- y `user_userprofile_id_user_profile = 1` existen en `user`
 (CURDATE(), 'Mi nueva canción', NULL, 2, 2) ,
 (CURDATE(), 'Una pintura extraordinaria', NULL, 3, 3), 
 (CURDATE(), 'Película próximamente', NULL, 4, 4), 
@@ -227,7 +267,7 @@ select * from user;
 INSERT INTO `AlephArt`.`comments` 
 (`comment_date`, `comment_description`, `posts_id_posts`) 
 VALUES
-(CURDATE(), 'Me encanta.', 1) , -- Asume que `posts_id_posts = 1` existe en la tabla `posts`
+(CURDATE(), 'Me encanta.', 1) , -- Asume que `posts_id_posts = 1` existe en  `posts`
 (CURDATE(), 'Super inspirador', 2) ,
 (CURDATE(), 'Maravilloso trabajo.', 3), 
 (CURDATE(), 'Qué buena interpretación del paisaje! Me encanta!', 4),
