@@ -198,8 +198,243 @@ CREATE TABLE IF NOT EXISTS `AlephArt`.`events` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+select * from book;
+select * from user;
+select * from userprofile;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+INSERT INTO `AlephArt`.`user` 
+(`username`, `last_name`, `phone_number`, `password`, `email`, `userprofile_id_user_profile`) 
+VALUES
+('johndoe', 'Doe', 1234567890123, 'hashedpassword123', 'john.doe@example.com', 1),  -- Asume que `userprofile_id_user_profile = 1` existe en la tabla `userprofile`
+('jane_smith', 'Smith', 1234567890124, 'hashed_password2', 'jane.smith@example.com', 2),
+('michael_jones', 'Jones', 1234567890125, 'hashed_password3', 'michael.jones@example.com', 3),
+('lisa_brown', 'Brown', 1234567890126, 'hashed_password4', 'lisa.brown@example.com', 4),
+('robert_white', 'White', 1234567890127, 'hashed_password5', 'robert.white@example.com', 5);
+select * from user;
+select * from userprofile;
 
+INSERT INTO `AlephArt`.`posts` 
+(`posts_date`, `posts_description`, `post_file`, `user_id_user`, `user_userprofile_id_user_profile`) 
+VALUES
+(CURDATE(), 'Comparti mi más reciente obra de arte', NULL, 1, 1),  -- Asume que `user_id_user = 1` y `user_userprofile_id_user_profile = 1` existen en la tabla `user`
+(CURDATE(), 'Mi nueva canción', NULL, 2, 2) ,
+(CURDATE(), 'Una pintura extraordinaria', NULL, 3, 3), 
+(CURDATE(), 'Película próximamente', NULL, 4, 4), 
+(CURDATE(), 'Fotos del último casting', NULL, 5, 5);
+select * from posts;
+select * from user;
+
+INSERT INTO `AlephArt`.`comments` 
+(`comment_date`, `comment_description`, `posts_id_posts`) 
+VALUES
+(CURDATE(), 'Me encanta.', 1) , -- Asume que `posts_id_posts = 1` existe en la tabla `posts`
+(CURDATE(), 'Super inspirador', 2) ,
+(CURDATE(), 'Maravilloso trabajo.', 3), 
+(CURDATE(), 'Qué buena interpretación del paisaje! Me encanta!', 4),
+(CURDATE(), 'Wow, cuándo es tu siguiente exposición?', 5);
+select * from comments;
+
+INSERT INTO `AlephArt`.`eventmode` 
+(`mode_name`) 
+VALUES
+('Presencial'),
+('Virtual');
+select * from eventmode;
+
+
+INSERT INTO `AlephArt`.`eventcategory` 
+(`category_name`) 
+VALUES
+('Arte Urbano'),
+('Tecnologías'),
+('Música'),
+('Dibujo'),
+('Talleres');
+select * from eventcategory;
+
+INSERT INTO `AlephArt`.`locationcity` 
+(`city_name`) 
+VALUES
+('Acapulco de Juárez'),
+('Aguascalientes'),
+('Apatzingán de la Constitución'),
+('Apodaca'),
+('Buena Vista'),
+('Cabo San Lucas'),
+('Campeche'),
+('Cancún'),
+('Celaya'),
+('Chalco de Díaz Covarrubias'),
+('Chetumal'),
+('Chicoloapan'),
+('Chihuahua'),
+('Chimalhuacán'),
+('Chilpancingo de los Bravo'),
+('Cholula de Rivadavia'),
+('Ciudad Acuña'),
+('Ciudad Cuauhtémoc'),
+('CDMX'),
+('Ciudad del Carmen'),
+('Ciudad Guzmán'),
+('Ciudad Juárez'),
+('Ciudad López Mateos'),
+('Ciudad Madero'),
+('Ciudad Obregón'),
+('Ciudad Valles'),
+('Ciudad Victoria'),
+('Coahuila'),
+('San Luis Potosí'),
+('Colima'),
+('Comitán de Domínguez'),
+('Córdoba'),
+('Cuautitlán'),
+('Cuautitlán Izcalli'),
+('Cuautla'),
+('Cuernavaca'),
+('Culiacán Rosales'),
+('Delicias'),
+('Durango'),
+('Ecatepec de Morelos'),
+('Ensenada'),
+('El Pueblito'),
+('Fresnillo'),
+('García'),
+('General Escobedo'),
+('Gómez Palacio'),
+('Guadalajara'),
+('Guadalupe'),
+('Guanajuato'),
+('Guaymas'),
+('Hermosillo'),
+('Hidalgo del Parral'),
+('Iguala'),
+('Irapuato'),
+('Ixtapaluca'),
+('Jiutepec'),
+('Juárez'),
+('Kanasín'),
+('La Paz'),
+('Lagos de Moreno'),
+('León'),
+('Los Mochis'),
+('Manzanillo'),
+('Matamoros'),
+('Mazatlán'),
+('Mérida'),
+('Mexicali'),
+('Minatitlán'),
+('Miramar'),
+('Monclova'),
+('Monterrey'),
+('Morelia'),
+('Naucalpan de Juárez'),
+('Navojoa'),
+('Nezahualcóyotl'),
+('Nogales'),
+('Nuevo Laredo'),
+('Oaxaca de Juárez'),
+('Ojo de Agua'),
+('Orizaba'),
+('Pachuca de Soto'),
+('Playa del Carmen'),
+('Piedras Negras'),
+('Poza Rica de Hidalgo'),
+('Puebla de Zaragoza'),
+('Puerto Vallarta'),
+('Querétaro'),
+('Ramos Arizpe'),
+('Reynosa'),
+('Rosarito'),
+('Río Bravo'),
+('Salamanca'),
+('Saltillo'),
+('San Cristóbal de las Casas'),
+('San Francisco Coacalco'),
+('San José del Cabo'),
+('San Juan Bautista Tuxtepec'),
+('San Juan del Río'),
+('San Luis Potosí'),
+('San Luis Río Colorado'),
+('San Nicolás de los Garza'),
+('San Miguel de Allende'),
+('San Pablo de las Salinas'),
+('San Pedro Garza García'),
+('Santa Catarina'),
+('Soledad de Graciano Sánchez'),
+('Tampico'),
+('Tapachula'),
+('Tehuacán'),
+('Temixco'),
+('Tepexpan'),
+('Tepic'),
+('Tijuana'),
+('Tlalnepantla de Baz'),
+('Tlaquepaque'),
+('Toluca de Lerdo'),
+('Tonalá'),
+('Torreón'),
+('Tulancingo de Bravo'),
+('Tulum'),
+('Tuxtla Gutiérrez'),
+('Uruapan del Progreso'),
+('Veracruz'),
+('Villa de Álvarez'),
+('Villa Nicolás Romero'),
+('Villahermosa'),
+('Xalapa-Enríquez'),
+('Xico'),
+('Zacatecas'),
+('Zamora de Hidalgo'),
+('Zapopan');
+SELECT * FROM locationcity;
+
+
+
+
+INSERT INTO `AlephArt`.`locationstate` 
+(`state_name`) 
+VALUES
+('Aguascalientes'),
+('Baja California'),
+('Baja California Sur'),
+('Campeche'),
+('Chiapas'),
+('Chihuahua'),
+('Coahuila'),
+('Colima'),
+('Durango'),
+('Guanajuato'),
+('Guerrero'),
+('Hidalgo'),
+('Jalisco'),
+('Mexico'),
+('Mexico City'),
+('Michoacán'),
+('Morelos'),
+('Nayarit'),
+('Nuevo León'),
+('Oaxaca'),
+('Puebla'),
+('Querétaro'),
+('Quintana Roo'),
+('San Luis Potosí'),
+('Sinaloa'),
+('Sonora'),
+('Tabasco'),
+('Tamaulipas'),
+('Tlaxcala'),
+('Veracruz'),
+('Yucatán'),
+('Zacatecas');
+SELECT * FROM locationstate;
+
+
+SELECT * FROM events;
+INSERT INTO `AlephArt`.`events` 
+(`event_name`, `event_description`, `event_photo`, `event_date`, `event_time`, `user_id_user`, `user_userprofile_id_user_profile`, `eventmode_id_event_mode`, `eventcategory_id_event_category`, `locationcity_id_location_city`, `locationstate_id_location_state`) 
+VALUES -- Asume que los valores de las claves foráneas existen
+('AlephArt Expo', 'An event showcasing art from all over the world.', NULL, CURDATE(), CURTIME(), 1, 1, 1, 1, 1, 1),  -- evento creado por el usuario 1 
+('Reunión de grafiti', 'An event showcasing art from all over the world.', NULL, CURDATE(), CURTIME(), 1, 1, 2, 1, 1, 1),  -- eventmode_id_event_mode=2=virtual
+('Taller de acuarela', 'An event showcasing art from all over the world.', NULL, CURDATE(), CURTIME(), 1, 1, 1, 5, 1, 1),  -- eventcategory_id_event_category`=5= talleres
+('Morelos, Anfitrión del mundo', 'An event showcasing art from all over the world.', NULL, CURDATE(), CURTIME(), 1, 1, 1, 5, 45, 17),  -- `locationcity_id_location_city`= 45= cuernavaca `locationstate_id_location_state`=17=morelos
+('AlephArt Expo', 'Presentación Final 3 del proyecto Integrador', NULL, CURDATE(), CURTIME(), 4, 4, 2 , 2, 15 , 15);  -- evento creado por el usuario 4  en modalidad 2= virtual, categoría2=tecnologías, city=15=CDMX, state=15= CDMX
