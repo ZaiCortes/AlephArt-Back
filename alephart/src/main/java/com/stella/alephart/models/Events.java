@@ -12,7 +12,7 @@ public class Events {
 	private String event_name;
 	private String event_description;
 	private byte event_photo;
-	private String event_date;
-	private String event_time;
+	private String event_date; //Checar tipo de dato en BD SQL 
+	private String event_time; //Checar tipo de dato en BD SQL
 	
 }
