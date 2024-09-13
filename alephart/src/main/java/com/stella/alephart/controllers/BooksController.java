@@ -41,7 +41,6 @@ public class BooksController {
 						.map(ResponseEntity::ok) 
 						.orElse(ResponseEntity.notFound().build()); 
 		}
-		
 		// POST
 		@PostMapping
 		public Book createBook(@RequestBody Book book) {

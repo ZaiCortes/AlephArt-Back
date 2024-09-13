@@ -7,5 +7,6 @@ import com.stella.alephart.models.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-
+ 
 }
+

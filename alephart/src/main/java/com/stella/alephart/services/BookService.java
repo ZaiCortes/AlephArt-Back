@@ -13,25 +13,21 @@ import com.stella.alephart.repository.BookRepository;
 @Service
 public class BookService {
 
-	// Inyección de dependencias
+	// Inyección de dependencias 
 		@Autowired
 		private BookRepository bookRepository;
-		
 		// GET all
 		public List<Book> findAllBooks(){
 			return bookRepository.findAll();
 		}
-		
 		// GET single
 		public Optional<Book> findBookById(Long id){
 			return bookRepository.findById(id);
-		}
-			
+		}	
 		// POST
 		public Book saveBook(Book book) {
 			return bookRepository.save(book);
 		}
-		
 		// PUT #EDIT
 		public Book updateBook(Long id, Book book) {
 			Optional<Book> existingBookOptional = bookRepository.findById(id);
@@ -50,8 +46,7 @@ public class BookService {
 			} else {
 				// Si no se encuentra el book
 				throw new RuntimeException("Book no encontrado");
-			}
-			
+			}	
 		}
 		
 		
