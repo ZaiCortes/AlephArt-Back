@@ -25,36 +25,5 @@ public class EventModeService {
 	public Optional<EventMode> findEventModeById(Long id){
 		return eventModeRepository.findById(id);
 	}
-		
-	// POST
-	public EventMode saveEventMode(EventMode eventMode) {
-		return eventModeRepository.save(eventMode);
-	}
-	
-	// PUT #EDIT
-	public EventMode updateEventMode(Long id, EventMode eventMode) {
-		Optional<EventMode> existingEventModeOptional = eventModeRepository.findById(id);
-		
-		// Si el event mode existe...
-		if (existingEventModeOptional.isPresent()) {
-			EventMode existingEventMode = existingEventModeOptional.get();
-			
-			// Actualizar datos del event mode
-			existingEventMode.setMode_name(eventMode.getMode_name());
-			
-			return eventModeRepository.save(eventMode);
-		} else {
-			// Si no se encuentra el event mode
-			throw new RuntimeException("EventMode no encontrado");
-		}
-		
-	}
-	
-	
-	// DELETE 
-	public void deleteEventMode(Long id) {
-		eventModeRepository.deleteById(id);
-	}
-	
 	
 }
