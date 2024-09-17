@@ -39,14 +39,14 @@ public class PostsController {
 		
 		// POST
 		@PostMapping
-		public ResponseEntity<Posts> createPost(@RequestBody Posts post, @RequestParam("userProfileId") Long userProfileId) {
-		    try {
-		        Posts createdPost = postService.savePost(post, userProfileId);
-		        return ResponseEntity.ok(createdPost);
-		    } catch (RuntimeException e) {
-		        return ResponseEntity.badRequest().body(null);
-		    }
-		}
+	    public ResponseEntity<Posts> createPost(@RequestBody Posts post, @RequestParam("userId") Long userId) {
+	        try {
+	            Posts createdPost = postService.savePost(post, userId);
+	            return ResponseEntity.ok(createdPost);
+	        } catch (RuntimeException e) {
+	            return ResponseEntity.badRequest().body(null);
+	        }
+	    }
 		
 		// PUT
 		@PutMapping("/{id}")
