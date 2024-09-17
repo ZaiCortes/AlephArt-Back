@@ -31,10 +31,11 @@ public class LocationState {
 	@JsonManagedReference
 	private Set<Events> events = new HashSet<>();
 
-	public LocationState(Long id_location_state, String state_name) {
+	public LocationState(Long id_location_state, String state_name, Set<Events> events) {
 		super();
 		this.id_location_state = id_location_state;
 		this.state_name = state_name;
+		this.events = events;
 	}
 
 	public Long getId_location_state() {
@@ -53,10 +54,21 @@ public class LocationState {
 		this.state_name = state_name;
 	}
 
+	public Set<Events> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Events> events) {
+		this.events = events;
+	}
+
 	@Override
 	public String toString() {
-		return "LocationState [id_location_state=" + id_location_state + ", state_name=" + state_name + "]";
+		return "LocationState [id_location_state=" + id_location_state + ", state_name=" + state_name + ", events="
+				+ events + "]";
 	}
+
+	
 	
 	
 }

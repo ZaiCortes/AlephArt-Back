@@ -157,7 +157,8 @@ public class Events {
 				+ ", event_time=" + event_time + ", eventMode=" + eventMode + ", eventCategory=" + eventCategory
 				+ ", locationCity=" + locationCity + ", locationState=" + locationState + "]";
 	}
-	 
+
+	
 	
 	 
 }
