@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 
 public class User {
@@ -26,6 +27,9 @@ public class User {
 	
 	@Column
 	private String email;
+	
+	@OneToOne(mappedBy = "user")
+	private UserProfile userProfile;
 	
 	public User() {}
 	
