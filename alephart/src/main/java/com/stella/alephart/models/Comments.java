@@ -1,10 +1,14 @@
 package com.stella.alephart.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,13 +23,31 @@ public class Comments {
 	@Column
 	private String comment_description;
 	
-	public Comments() {}
+	@ManyToOne
+    @JoinColumn(name = "posts_id_posts", nullable = false)
+	@JsonBackReference
+    private Posts post;
 	
-	public Comments(Long id_comment, String comment_date, String comment_description) {
+	@ManyToOne
+	@JoinColumn(name="user_id_user", nullable = false)
+	@JsonBackReference
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_userprofile_id_user_profile", nullable = false)
+	private UserProfile userProfile;
+	
+	public Comments() {}
+
+	public Comments(Long id_comment, String comment_date, String comment_description, Posts post, User user,
+			UserProfile userProfile) {
 		super();
 		this.id_comment = id_comment;
 		this.comment_date = comment_date;
 		this.comment_description = comment_description;
+		this.post = post;
+		this.user = user;
+		this.userProfile = userProfile;
 	}
 
 	public Long getId_comment() {
@@ -52,15 +74,35 @@ public class Comments {
 		this.comment_description = comment_description;
 	}
 
+	public Posts getPost() {
+		return post;
+	}
+
+	public void setPost(Posts post) {
+		this.post = post;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
 	@Override
 	public String toString() {
 		return "Comments [id_comment=" + id_comment + ", comment_date=" + comment_date + ", comment_description="
-				+ comment_description + "]";
+				+ comment_description + ", post=" + post + ", user=" + user + ", userProfile=" + userProfile + "]";
 	}
 	
 	
-	
-	
-	
-
 }

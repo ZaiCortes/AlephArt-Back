@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -20,7 +21,7 @@ import com.stella.alephart.models.Comments;
 import com.stella.alephart.services.CommentsService;
 
 @RestController
-@RequestMapping("/api/Comments")
+@RequestMapping("/api/comments")
 public class CommentsController {
 	@Autowired
 	private CommentsService commentsService;
@@ -48,10 +49,20 @@ public class CommentsController {
 	    }
 	 
 	
-	@PostMapping
-	public Comments createComments(@RequestBody Comments comments) {
-		return commentsService.saveComment(comments);
-	}
+	 @PostMapping
+	    public ResponseEntity<Comments> createComment(
+	            @RequestBody Comments comment,
+	            @RequestParam Long postId,
+	            @RequestParam Long userId) {
+	        try {
+	            Comments savedComment = commentsService.saveComment(comment, postId, userId);
+	            return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
+	        } catch (RuntimeException e) {
+	            return ResponseEntity.badRequest().body(null);
+	        }
+	    }
+	 
+	 // localhost:  /api/comments?postId=1&userId=2
 	
 
 	@DeleteMapping("/{id}")

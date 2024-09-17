@@ -1,8 +1,13 @@
 package com.stella.alephart.models;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,13 +27,13 @@ public class Posts {
 	@Column(name="id_posts")
 	private Long id_posts;
 	
-	@Column
+	@Column(name="posts_date")
 	private String post_date;
 	
-	@Column
+	@Column(name="posts_description")
 	private String post_description;
 	
-	@Column
+	@Column(name="post_file")
 	private byte[] post_file;
 	
 	//FK user_id_user
@@ -37,21 +43,26 @@ public class Posts {
 	@JoinColumn(name="user_id_user", nullable = false)
 	private User user;
 	
-	/*
 	@ManyToOne
-	@JoinColumn(name="user_userprofile_id_user_profile")
+	@JoinColumn(name = "user_userprofile_id_user_profile", nullable = false)
 	private UserProfile userProfile;
-	*/
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+    private List<Comments> comments = new ArrayList<>();
 	
 	public Posts() {}
 
-	public Posts(Long id_posts, String post_date, String post_description, byte[] post_file, User user) {
+	public Posts(Long id_posts, String post_date, String post_description, byte[] post_file, User user,
+			UserProfile userProfile, List<Comments> comments) {
 		super();
 		this.id_posts = id_posts;
 		this.post_date = post_date;
 		this.post_description = post_description;
 		this.post_file = post_file;
 		this.user = user;
+		this.userProfile = userProfile;
+		this.comments = comments;
 	}
 
 	public Long getId_posts() {
@@ -94,11 +105,40 @@ public class Posts {
 		this.user = user;
 	}
 
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+	
+	public void addComment(Comments comment) {
+        comments.add(comment);
+        comment.setPost(this);
+    }
+    
+    public void removeComment(Comments comment) {
+        comments.remove(comment);
+        comment.setPost(null);
+    }
+
 	@Override
 	public String toString() {
 		return "Posts [id_posts=" + id_posts + ", post_date=" + post_date + ", post_description=" + post_description
-				+ ", post_file=" + Arrays.toString(post_file) + ", user=" + user + "]";
+				+ ", post_file=" + Arrays.toString(post_file) + ", user=" + user + ", userProfile=" + userProfile
+				+ ", comments=" + comments + "]";
 	}
 	
+	
+
 	
 }
