@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stella.alephart.models.Posts;
@@ -38,13 +39,18 @@ public class PostsController {
 		
 		// POST
 		@PostMapping
-		public Posts createPost(@RequestBody Posts post) {
-			return postService.savePost(post);
+		public ResponseEntity<Posts> createPost(@RequestBody Posts post, @RequestParam("userProfileId") Long userProfileId) {
+		    try {
+		        Posts createdPost = postService.savePost(post, userProfileId);
+		        return ResponseEntity.ok(createdPost);
+		    } catch (RuntimeException e) {
+		        return ResponseEntity.badRequest().body(null);
+		    }
 		}
 		
 		// PUT
 		@PutMapping("/{id}")
-	    public ResponseEntity<Posts> updatePost(@PathVariable Long id, @RequestBody Posts updatedPost) {
+		public ResponseEntity<Posts> updatePost(@PathVariable("id") Long id, @RequestBody Posts updatedPost) {
 	        try {
 	            Posts post = postService.updatePost(id, updatedPost);
 	            return ResponseEntity.ok(post);

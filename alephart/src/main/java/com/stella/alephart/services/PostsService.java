@@ -7,13 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stella.alephart.models.Posts;
+import com.stella.alephart.models.UserProfile;
 import com.stella.alephart.repository.PostsRepository;
+import com.stella.alephart.repository.UserProfileRepository;
 
 @Service
 public class PostsService {
 	
 	@Autowired
-	private PostsRepository postRepository;
+    private PostsRepository postRepository;
+    
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+    
+    public Posts savePost(Posts post, Long userProfileId) {
+        UserProfile userProfile = userProfileRepository.findById(userProfileId)
+            .orElseThrow(() -> new RuntimeException("UserProfile not found"));
+        post.setUserProfile(userProfile);
+        return postRepository.save(post);
+    }
 	
 	public List<Posts> findAllPosts(){
 		return postRepository.findAll();
@@ -21,10 +33,6 @@ public class PostsService {
 	
 	public Optional <Posts> findPostById(Long id){
 		return postRepository.findById(id);
-	}
-	
-	public Posts savePost(Posts post) {
-		return postRepository.save(post);
 	}
 	
 	//updatedPost es un objeto que contiene los datos actualizados.
@@ -46,4 +54,3 @@ public class PostsService {
 	
 
 }
-
