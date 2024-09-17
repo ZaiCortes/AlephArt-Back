@@ -1,6 +1,8 @@
 package com.stella.alephart.models;
 
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,10 +25,10 @@ public class UserProfile {
 	private Long id_user_profile;
 	
 	@Column
-	private byte profile_photo;
+	private byte[] profile_photo;
 	
 	@Column
-	private byte banner;
+	private byte[] banner;
 	
 	@Column
 	private String about_me;
@@ -49,7 +51,7 @@ public class UserProfile {
 	public UserProfile() {}
 
 
-	public UserProfile(Long id_user_profile, byte profile_photo, byte banner, String about_me, String profession,
+	public UserProfile(Long id_user_profile, byte[] profile_photo, byte[] banner, String about_me, String profession,
 			User user, Book book) {
 		super();
 		this.id_user_profile = id_user_profile;
@@ -72,22 +74,22 @@ public class UserProfile {
 	}
 
 
-	public byte getProfile_photo() {
+	public byte[] getProfile_photo() {
 		return profile_photo;
 	}
 
 
-	public void setProfile_photo(byte profile_photo) {
+	public void setProfile_photo(byte[] profile_photo) {
 		this.profile_photo = profile_photo;
 	}
 
 
-	public byte getBanner() {
+	public byte[] getBanner() {
 		return banner;
 	}
 
 
-	public void setBanner(byte banner) {
+	public void setBanner(byte[] banner) {
 		this.banner = banner;
 	}
 
@@ -134,11 +136,13 @@ public class UserProfile {
 
 	@Override
 	public String toString() {
-		return "UserProfile [id_user_profile=" + id_user_profile + ", profile_photo=" + profile_photo + ", banner="
-				+ banner + ", about_me=" + about_me + ", profession=" + profession + ", user=" + user + ", book=" + book
-				+ "]";
+		return "UserProfile [id_user_profile=" + id_user_profile + ", profile_photo=" + Arrays.toString(profile_photo)
+				+ ", banner=" + Arrays.toString(banner) + ", about_me=" + about_me + ", profession=" + profession
+				+ ", user=" + user + ", book=" + book + "]";
 	}
 
+
+	
 	
 	
 }
