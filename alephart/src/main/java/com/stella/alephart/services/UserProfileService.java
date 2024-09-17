@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.stella.alephart.models.UserProfile;
 import com.stella.alephart.repository.UserProfileRepository;
 
+@Service
 public class UserProfileService {
 	// inyección
 	@Autowired
