@@ -19,33 +19,38 @@ public class Events {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_events;
+	
 	@Column
 	private String event_name;
+	
 	@Column
 	private String event_description;
+	
 	@Column
 	@Lob
 	private byte[] event_photo;
+	
 	@Column
 	private String event_date; //Checar tipo de dato en BD SQL 
+	
 	@Column
 	private String event_time; //Checar tipo de dato en BD SQL
 	
 	@ManyToOne
-    @JoinColumn(name = "eventmode_id_event_mode", referencedColumnName = "id_event_mode")
+    @JoinColumn(name = "eventmode_id_event_mode", referencedColumnName = "id_event_mode", nullable = false)
     private EventMode eventMode;
 	
-	 @ManyToOne
-	 @JoinColumn(name = "eventcategory_id_event_category", referencedColumnName = "id_event_category")
-	 private EventCategory eventCategory;
+	@ManyToOne
+	@JoinColumn(name = "eventcategory_id_event_category", referencedColumnName = "id_event_category", nullable = false)
+	private EventCategory eventCategory;
 	 
-	 @ManyToOne
-	 @JoinColumn(name = "locationcity_id_location_city", referencedColumnName = "id_location_city")
-	 private LocationCity locationCity;
+	@ManyToOne
+	@JoinColumn(name = "locationcity_id_location_city", referencedColumnName = "id_location_city", nullable = false)
+	private LocationCity locationCity;
 	 
-	 @ManyToOne
-	 @JoinColumn(name = "locationstate_id_location_state", referencedColumnName = "id_location_state")
-	 private LocationState locationState;
+	@ManyToOne
+	@JoinColumn(name = "locationstate_id_location_state", referencedColumnName = "id_location_state", nullable = false)
+	private LocationState locationState;
 	 
 	public Events () {}
 
