@@ -1,13 +1,16 @@
 package com.stella.alephart.models;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
+@Entity
 public class UserProfile {
 	
 	@Id
@@ -26,9 +29,15 @@ public class UserProfile {
 	@Column
 	private String profession;
 	
-	@OneToOne
-	@JoinColumn(name = "id_user", nullable = false)
-	private User user;
+	 // USERPROFILE O:O USER -- Relación inversa 
+	@OneToOne(mappedBy = "userProfile") // Con mappedBy -> userP no es la propietaria de la relación
+    private User user;
+	
+	// USERPROFILE O:M BOOK
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id_book", referencedColumnName = "id_book")
+    private Book book;
+
 	
 	public UserProfile() {}
 

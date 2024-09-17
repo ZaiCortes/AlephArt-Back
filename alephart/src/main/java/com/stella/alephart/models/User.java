@@ -1,12 +1,19 @@
 package com.stella.alephart.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
-
+@Entity
 public class User {
 	
 	@Id
@@ -28,8 +35,32 @@ public class User {
 	@Column
 	private String email;
 	
-	@OneToOne(mappedBy = "user")
+	
+	// User es dueña de la relación. CASCADE pa que los cambios de propaguen. optional = false asegura que siemore exista un userP asociado a cada User.
+	// name : nombre de la columna de la relacion con userProfile
+	// referencedColumnName : a dode apunta la foreign key en userProfile
+    
+	// USER O:O USERPROFILE
+	@OneToOne(cascade = CascadeType.ALL, optional = false) 
+	@JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile" ) 
 	private UserProfile userProfile;
+	
+	
+	// USER O:M POSTS
+	// orphanRemoval = true: Elimina cualquier post que ya no esté asociado a un user
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Posts> posts = new ArrayList<>();
+	
+	
+	// USER O:M COMMENTS
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comments> comments = new ArrayList<>();
+	
+	
+	// USER O:M EVENTS
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Events> events = new ArrayList<>();
+
 	
 	public User() {}
 	
