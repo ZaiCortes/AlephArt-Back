@@ -22,7 +22,7 @@ public class PostsService {
     
     public Posts savePost(Posts post, Long userProfileId) {
         UserProfile userProfile = userProfileRepository.findById(userProfileId)
-            .orElseThrow(() -> new RuntimeException("UserProfile not found"));
+            .orElseThrow(() -> new RuntimeException("El UserProfile con el id " + userProfileId + " no fue encontrado"));
         post.setUserProfile(userProfile);
         return postRepository.save(post);
     }
