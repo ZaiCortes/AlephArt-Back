@@ -14,8 +14,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="user")
 public class User {
 	
 	@Id
@@ -45,6 +47,7 @@ public class User {
 	// USER O:O USERPROFILE
 	@OneToOne(cascade = CascadeType.ALL, optional = false) 
 	@JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile")
+	@JsonManagedReference
 	private UserProfile userProfile;
 	
 	
@@ -68,8 +71,10 @@ public class User {
 
 	
 	public User() {}
-	
-	public User(Long id_user, String first_name, String last_name, String phone_number, String password, String email) {
+
+
+	public User(Long id_user, String first_name, String last_name, String phone_number, String password, String email,
+			UserProfile userProfile, List<Posts> posts, List<Comments> comments, List<Events> events) {
 		super();
 		this.id_user = id_user;
 		this.first_name = first_name;
@@ -77,60 +82,118 @@ public class User {
 		this.phone_number = phone_number;
 		this.password = password;
 		this.email = email;
+		this.userProfile = userProfile;
+		this.posts = posts;
+		this.comments = comments;
+		this.events = events;
 	}
+
 
 	public Long getId_user() {
 		return id_user;
 	}
 
+
 	public void setId_user(Long id_user) {
 		this.id_user = id_user;
 	}
+
 
 	public String getFirst_name() {
 		return first_name;
 	}
 
+
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
+
 
 	public String getLast_name() {
 		return last_name;
 	}
 
+
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
+
 
 	public String getPhone_number() {
 		return phone_number;
 	}
 
+
 	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+
+	public List<Posts> getPosts() {
+		return posts;
+	}
+
+
+	public void setPosts(List<Posts> posts) {
+		this.posts = posts;
+	}
+
+
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+
+
+	public List<Events> getEvents() {
+		return events;
+	}
+
+
+	public void setEvents(List<Events> events) {
+		this.events = events;
+	}
+
+
 	@Override
 	public String toString() {
 		return "User [id_user=" + id_user + ", first_name=" + first_name + ", last_name=" + last_name
-				+ ", phone_number=" + phone_number + ", password=" + password + ", email=" + email + "]";
+				+ ", phone_number=" + phone_number + ", password=" + password + ", email=" + email + ", userProfile="
+				+ userProfile + ", posts=" + posts + ", comments=" + comments + ", events=" + events + "]";
 	}
 	
 	
