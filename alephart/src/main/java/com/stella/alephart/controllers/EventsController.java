@@ -19,7 +19,7 @@ import com.stella.alephart.models.Events;
 import com.stella.alephart.services.EventsService;
 
 @RestController
-@RequestMapping("/api/Events")
+@RequestMapping("/api/events")
 public class EventsController {
 	
 	@Autowired
