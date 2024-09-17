@@ -1,6 +1,8 @@
 package com.stella.alephart.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +35,7 @@ public class UserProfile {
 	@OneToOne(mappedBy = "userProfile") // Con mappedBy -> userP no es la propietaria de la relación
     private User user;
 	
-	// USERPROFILE O:M BOOK
+	// USERPROFILE O:O BOOK
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id_book", referencedColumnName = "id_book")
     private Book book;

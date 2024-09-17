@@ -3,6 +3,8 @@ package com.stella.alephart.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,23 +44,26 @@ public class User {
     
 	// USER O:O USERPROFILE
 	@OneToOne(cascade = CascadeType.ALL, optional = false) 
-	@JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile" ) 
+	@JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile")
 	private UserProfile userProfile;
 	
 	
 	// USER O:M POSTS
 	// orphanRemoval = true: Elimina cualquier post que ya no esté asociado a un user
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Posts> posts = new ArrayList<>();
+	@JsonManagedReference
+	private List<Posts> posts = new ArrayList<>();
 	
 	
 	// USER O:M COMMENTS
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
     private List<Comments> comments = new ArrayList<>();
 	
 	
 	// USER O:M EVENTS
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
     private List<Events> events = new ArrayList<>();
 
 	
