@@ -1,9 +1,10 @@
 package com.stella.alephart.models;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,6 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id_user")
 public class User {
 	
 	@Id
@@ -39,42 +41,26 @@ public class User {
 	@Column
 	private String email;
 	
-	
-	// User es dueña de la relación. CASCADE pa que los cambios de propaguen. optional = false asegura que siemore exista un userP asociado a cada User.
-	// name : nombre de la columna de la relacion con userProfile
-	// referencedColumnName : a dode apunta la foreign key en userProfile
-    
-	// USER O:O USERPROFILE
-	@OneToOne(cascade = CascadeType.ALL, optional = false) 
-	@JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile")
-	@JsonManagedReference
-	private UserProfile userProfile;
-	
-	
-	// USER O:M POSTS
-	// orphanRemoval = true: Elimina cualquier post que ya no esté asociado a un user
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
-	private List<Posts> posts = new ArrayList<>();
-	
-	
-	// USER O:M COMMENTS
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
-    private List<Comments> comments = new ArrayList<>();
-	
-	
-	// USER O:M EVENTS
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
-    private List<Events> events = new ArrayList<>();
 
-	
+	@OneToOne(cascade = CascadeType.ALL, optional = false) 
+    @JoinColumn(name = "userprofile_id_user_profile", referencedColumnName = "id_user_profile")
+    private UserProfile userProfile;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Posts> posts;
+    
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comments> comments;
+    
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Events> events;
+   
+
 	public User() {}
 
 
 	public User(Long id_user, String first_name, String last_name, String phone_number, String password, String email,
-			UserProfile userProfile, List<Posts> posts, List<Comments> comments, List<Events> events) {
+			UserProfile userProfile, List<Posts> posts, List<Comments> comments) {
 		super();
 		this.id_user = id_user;
 		this.first_name = first_name;
@@ -85,7 +71,6 @@ public class User {
 		this.userProfile = userProfile;
 		this.posts = posts;
 		this.comments = comments;
-		this.events = events;
 	}
 
 
@@ -179,24 +164,13 @@ public class User {
 	}
 
 
-	public List<Events> getEvents() {
-		return events;
-	}
-
-
-	public void setEvents(List<Events> events) {
-		this.events = events;
-	}
-
-
 	@Override
 	public String toString() {
 		return "User [id_user=" + id_user + ", first_name=" + first_name + ", last_name=" + last_name
 				+ ", phone_number=" + phone_number + ", password=" + password + ", email=" + email + ", userProfile="
-				+ userProfile + ", posts=" + posts + ", comments=" + comments + ", events=" + events + "]";
+				+ userProfile + ", posts=" + posts + ", comments=" + comments + "]";
 	}
-	
-	
-	
-	
+
+
+
 }

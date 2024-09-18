@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.stella.alephart.dto.PostCreateDTO;
 import com.stella.alephart.models.Posts;
 import com.stella.alephart.services.PostsService;
 
@@ -37,16 +37,15 @@ public class PostsController {
 					.orElse(ResponseEntity.notFound().build());
 		}
 		
-		// POST
-		@PostMapping
-	    public ResponseEntity<Posts> createPost(@RequestBody Posts post, @RequestParam("userId") Long userId) {
-	        try {
-	            Posts createdPost = postService.savePost(post, userId);
-	            return ResponseEntity.ok(createdPost);
-	        } catch (RuntimeException e) {
-	            return ResponseEntity.badRequest().body(null);
-	        }
-	    }
+		 @PostMapping
+		    public ResponseEntity<Posts> createPost(@RequestBody PostCreateDTO postCreateDTO) {
+		        try {
+		            Posts createdPost = postService.savePost(postCreateDTO);
+		            return ResponseEntity.ok(createdPost);
+		        } catch (RuntimeException e) {
+		            return ResponseEntity.badRequest().body(null);
+		        }
+		    }
 		
 		// PUT
 		@PutMapping("/{id}")
@@ -69,5 +68,24 @@ public class PostsController {
 					})
 					.orElse(ResponseEntity.notFound().build());
 		}
+			
+		/*
+		 
+		POST
+
+		{
+		"post_date":"2024-09-17",
+		"post_file": null,
+		"post_description": "descripción de la publicación",
+		"userId": 2,
+		"userProfileId": 2
+		}
+
+		PUT
+		{
+		"post_description": "Descripción actualizada"
+		}
+		 
+		 * */
 
 }

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.stella.alephart.dto.EventCreateDTO;
 import com.stella.alephart.models.Events;
 import com.stella.alephart.services.EventsService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/events")
@@ -29,36 +31,61 @@ public class EventsController {
 	public List<Events> getAllEvents() {
 		return eventsService.findAllEvents();
 	}
-	
-	@GetMapping("/{id}")
+	 @GetMapping("/{id}")
 	public ResponseEntity<Events> getEventsById(@PathVariable("id") Long id) {
 		return eventsService.findEventsById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());}
 	 
-	 @PostMapping
-		public Events createEvents(@RequestBody Events events) {
-			return eventsService.saveEvent(events);
-		}
-	 
 	 @PutMapping("/{id}")
-	 public ResponseEntity<Events> updateEvent(@PathVariable Long id, @RequestBody Events event) {
-	        try {
-	            Events updatedEvent = eventsService.updateEvent(id, event);
-	            return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
-	        } catch (RuntimeException e) {
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
+	 public ResponseEntity<Events> updateEvent(@PathVariable("id") Long id, @RequestBody Events event) {
+	     try {
+	         Events updatedEvent = eventsService.updateEvent(id, event);
+	         return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+	     } catch (EntityNotFoundException e) {
+	         return ResponseEntity.notFound().build();
+	     }
+	 }
 	 
-	  @DeleteMapping("/{id}")
-	  public ResponseEntity<Void> deleteEvents(@PathVariable("id") Long id) {
-		  return eventsService.findEventsById(id)
-			  	.map(events -> {
-				  	eventsService.deleteEvent(id);
-					return ResponseEntity.ok().<Void>build();
-				})
-				.orElse(ResponseEntity.notFound().build());
+	 @PostMapping
+	 public ResponseEntity<Events> createEvents(@RequestBody EventCreateDTO eventDTO) {
+	     try {
+	         Events event = eventsService.createEventFromDTO(eventDTO);
+	         return new ResponseEntity<>(event, HttpStatus.CREATED);
+	     } catch (EntityNotFoundException e) {
+	         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	     }
+	 }
+		
+
+		@DeleteMapping("/{id}")
+			public ResponseEntity<Void> deleteEvents(@PathVariable("id") Long id) {
+				return eventsService.findEventsById(id)
+						.map(events -> {
+							eventsService.deleteEvent(id);
+							return ResponseEntity.ok().<Void>build();
+						})
+						.orElse(ResponseEntity.notFound().build());
+			}
+		
+		/*
+		 * 
+		 POST /Para put se colocan los atributos que se quieren modificar
+		{
+		"event_name": "Nombre del evento",
+		"event_description": "Descripción del evento",
+		"event_photo": null,
+		"event_date": "2024-09-18",
+		"event_time": "17:36:36",
+		"userId": 2,
+		"userProfileId": 2,
+		"eventModeId": 1,
+		"eventCategoryId": 3,
+		"locationCityId": 5,
+		"locationStateId": 5
 		}
+
+		 * 
+		 * */
 
 }

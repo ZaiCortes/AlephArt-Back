@@ -30,7 +30,7 @@ public class UserProfileController {
     }
 	
 	 @GetMapping("/{id}")
-    public ResponseEntity<UserProfile> getUserProfileById(@PathVariable Long id) {
+    public ResponseEntity<UserProfile> getUserProfileById(@PathVariable("id") Long id) {
         Optional<UserProfile> userProfile = userProfileService.findUserById(id);
         return userProfile.map(ResponseEntity::ok)
                           .orElse(ResponseEntity.notFound().build());
@@ -43,7 +43,7 @@ public class UserProfileController {
     }
 	 
 	 @PutMapping("/{id}")
-    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable Long id, 
+    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable("id") Long id, 
                                                          @RequestBody UserProfile updatedProfile) {
         Optional<UserProfile> updated = userProfileService.updateUserProfile(id, updatedProfile);
         return updated.map(ResponseEntity::ok)
@@ -51,7 +51,7 @@ public class UserProfileController {
     } 
 	 
 	 @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> deleteUserProfile(@PathVariable Long id) {
+	    public ResponseEntity<Void> deleteUserProfile(@PathVariable("id") Long id) {
 	        Optional<UserProfile> userProfile = userProfileService.findUserById(id);
 	        if (userProfile.isPresent()) {
 	            userProfileService.deleteUserProfile(id);
@@ -60,6 +60,22 @@ public class UserProfileController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    } 
+	 
+	 /*
+	  * 
+	  PUT
+		/api/userProfile/9 
+	  	**Se coloca el id del userProfile que se quiere modificar
+
+		{
+		    "profile_photo": null,
+		    "banner": null,
+		    "about_me": "About me",
+		    "profession": "Profesión"
+		}
+	  
+	  * 
+	  * */
 	 
 	 
 }
