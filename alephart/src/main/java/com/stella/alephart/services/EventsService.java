@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.stella.alephart.models.Events;
 import com.stella.alephart.repository.EventsRepository;
 
+@Service
 public class EventsService {
 	
 	@Autowired
@@ -29,11 +31,20 @@ public class EventsService {
 		Optional<Events> existingEventsOptional = eventsRepository.findById(id);
 		
 		if (existingEventsOptional.isPresent()) {
-			Events existingEvents = existingEventsOptional.get();
+			Events existingEvent = existingEventsOptional.get();
 		
-			 existingEvents.setEvent_description(event.getEvent_description());
+			// Actualizamos los campos necesarios del evento
+            existingEvent.setEvent_name(event.getEvent_name());
+            existingEvent.setEvent_description(event.getEvent_description());
+            existingEvent.setEvent_photo(event.getEvent_photo());
+            existingEvent.setEvent_date(event.getEvent_date());
+            existingEvent.setEvent_time(event.getEvent_time());
+            existingEvent.setEventMode(event.getEventMode());
+            existingEvent.setEventCategory(event.getEventCategory());
+            existingEvent.setLocationCity(event.getLocationCity());
+            existingEvent.setLocationState(event.getLocationState());
 			
-			return eventsRepository.save(existingEvents);
+			return eventsRepository.save(existingEvent);
 		} else {
 			
 			throw new RuntimeException("Evento" + id + " no encontrado");

@@ -29,11 +29,17 @@ public class EventsController {
 	public List<Events> getAllEvents() {
 		return eventsService.findAllEvents();
 	}
-	 @GetMapping("/{id}")
+	
+	@GetMapping("/{id}")
 	public ResponseEntity<Events> getEventsById(@PathVariable("id") Long id) {
 		return eventsService.findEventsById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());}
+	 
+	 @PostMapping
+		public Events createEvents(@RequestBody Events events) {
+			return eventsService.saveEvent(events);
+		}
 	 
 	 @PutMapping("/{id}")
 	 public ResponseEntity<Events> updateEvent(@PathVariable Long id, @RequestBody Events event) {
@@ -45,20 +51,14 @@ public class EventsController {
 	        }
 	    }
 	 
-	 @PostMapping
-		public Events createEvents(@RequestBody Events events) {
-			return eventsService.saveEvent(events);
+	  @DeleteMapping("/{id}")
+	  public ResponseEntity<Void> deleteEvents(@PathVariable("id") Long id) {
+		  return eventsService.findEventsById(id)
+			  	.map(events -> {
+				  	eventsService.deleteEvent(id);
+					return ResponseEntity.ok().<Void>build();
+				})
+				.orElse(ResponseEntity.notFound().build());
 		}
-		
-
-		@DeleteMapping("/{id}")
-			public ResponseEntity<Void> deleteEvents(@PathVariable("id") Long id) {
-				return eventsService.findEventsById(id)
-						.map(events -> {
-							eventsService.deleteEvent(id);
-							return ResponseEntity.ok().<Void>build();
-						})
-						.orElse(ResponseEntity.notFound().build());
-			}
 
 }

@@ -32,10 +32,11 @@ public class LocationCity {
 	
 	public LocationCity() {}
 
-	public LocationCity(Long id_location_city, String city_name) {
+	public LocationCity(Long id_location_city, String city_name, Set<Events> events) {
 		super();
 		this.id_location_city = id_location_city;
 		this.city_name = city_name;
+		this.events = events;
 	}
 
 	public Long getId_location_city() {
@@ -54,9 +55,19 @@ public class LocationCity {
 		this.city_name = city_name;
 	}
 
+	public Set<Events> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Events> events) {
+		this.events = events;
+	}
+
 	@Override
 	public String toString() {
-		return "LocationCity [id_location_city=" + id_location_city + ", city_name=" + city_name + "]";
-	}	
+		return "LocationCity [id_location_city=" + id_location_city + ", city_name=" + city_name + ", events=" + events
+				+ "]";
+	}
+
 	
 }

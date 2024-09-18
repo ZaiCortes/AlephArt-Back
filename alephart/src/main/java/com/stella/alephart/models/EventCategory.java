@@ -34,11 +34,12 @@ public class EventCategory {
 	// inizializarlo para que apunte a algún lado
 	
 	public EventCategory(){}
-	
-	public EventCategory(Long id_event_category, String category_name) {
+
+	public EventCategory(Long id_event_category, String category_name, Set<Events> events) {
 		super();
 		this.id_event_category = id_event_category;
 		this.category_name = category_name;
+		this.events = events;
 	}
 
 	public Long getId_event_category() {
@@ -57,11 +58,19 @@ public class EventCategory {
 		this.category_name = category_name;
 	}
 
+	public Set<Events> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Events> events) {
+		this.events = events;
+	}
+
 	@Override
 	public String toString() {
-		return "EventCategory [id_event_category=" + id_event_category + ", category_name=" + category_name + "]";
-	}	
+		return "EventCategory [id_event_category=" + id_event_category + ", category_name=" + category_name
+				+ ", events=" + events + "]";
+	}
 	
-	
-	
+		
 }
